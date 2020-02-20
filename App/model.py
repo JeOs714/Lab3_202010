@@ -69,7 +69,7 @@ def newMovie (row):
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
     print(row)
-    movie= {"movie_id": row['id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
+    movie= {"movie_id": row["id"], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
     return movie
 
 
