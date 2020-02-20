@@ -77,6 +77,33 @@ def loadBooks (catalog, sep=','):
             for author in authors:
                 model.addAuthor (catalog, author.strip(), row)
     t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")  
+
+
+def loadMovies (catalog, sep=','):
+    """
+    Carga las películas del archivo.  Por cada libro se toman sus autores y por 
+    cada uno de ellos, se crea en la lista de autores, a dicho autor y una
+    referencia al libro que se esta procesando.
+    """
+    t1_start = process_time() #tiempo inicial
+    moviefile = cf.data_dir + 'GoodReads/SmallMoviesDetailsCleaned.csv'
+    dialect = csv.excel()
+    dialect.delimiter=sep
+    with open(moviefile, encoding="utf-8") as csvfile:
+        spamreader = csv.DictReader(csvfile, dialect=dialect)
+        for row in spamreader: 
+            # Se adiciona el libro a la lista de libros
+            model.addMovieList(catalog, row)
+            # Se adiciona el libro al mapa de libros (key=title)
+            model.addMovieMap(catalog, row)
+            # Se obtienen los autores del libro
+            authors = row['director_name'].split(",")
+            # Cada autor, se crea en la lista de autores del catalogo, y se 
+            # adiciona un libro en la lista de dicho autor (apuntador al libro)
+            for author in authors:
+                model.addAuthor (catalog, author.strip(), row)
+    t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
 
 
@@ -85,17 +112,24 @@ def initCatalog ():
     """
     Llama la funcion de inicializacion del catalogo del modelo.
     """
-    catalog = model.newCatalog()
+    catalog = model.newCatalogMovies()
     return catalog
 
 
 
-def loadData (catalog):
+def loadDataBooks (catalog):
     """
     Carga los datos de los archivos y cargar los datos en la
     estructura de datos
     """
     loadBooks(catalog)
+
+def loadDataMovies (catalog):
+    """
+    Carga los datos de los archivos y cargar los datos en la
+    estructura de datos
+    """
+    loadMovies(catalog)
     
 
 # Funciones llamadas desde la vista y enviadas al modelo

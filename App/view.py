@@ -56,7 +56,7 @@ def loadData (catalog):
     """
     Carga las peliculas en la estructura de datos
     """
-    controller.loadData(catalog)
+    controller.loadDataMovies(catalog)
 
 
 """

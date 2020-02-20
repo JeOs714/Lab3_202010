@@ -45,12 +45,33 @@ def newCatalog():
     return catalog
 
 
+def newCatalogMovies():
+    """
+    Inicializa el catálogo de peliculas. Retorna el catalogo inicializado.
+    """
+    catalog = {'moviesList':None, 'directors':None, 'moviesMap': None, "actors": None}
+    catalog['moviesList'] = lt.newList("ARRAY_LIST")
+    catalog['moviesMap'] = map.newMap (329044 , maptype='CHAINING')#10000 books
+    catalog['directors'] = map.newMap (85929 , maptype='PROBING') #5841 authors
+    catalog['actors']=map.newMap (260861  , maptype='PROBING')
+
+    return catalog
+
 def newBook (row):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
     book = {"book_id": row['book_id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
     return book
+
+def newMovie (row):
+    """
+    Crea una nueva estructura para almacenar los actores de una pelicula 
+    """
+    print(row)
+    movie= {"movie_id": row['id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
+    return movie
+
 
 def addBookList (catalog, row):
     """
@@ -60,6 +81,16 @@ def addBookList (catalog, row):
     book = newBook(row)
     lt.addLast(books, book)
 
+def addMovieList (catalog, row):
+    """
+    Adiciona libro a la lista
+    """
+    movies = catalog['moviesList']
+    movie = newMovie(row)
+    lt.addLast(movies, movie)
+
+
+
 def addBookMap (catalog, row):
     """
     Adiciona libro al map con key=title
@@ -67,6 +98,15 @@ def addBookMap (catalog, row):
     books = catalog['booksMap']
     book = newBook(row)
     map.put(books, book['title'], book, compareByKey)
+
+def addMovieMap (catalog, row):
+    """
+    Adiciona libro al map con key=title
+    """
+    movies = catalog['booksMap']
+    movie = newMovie(row)
+    map.put(movies, movie['title'], movie, compareByKey)
+
 
 def newAuthor (name, row):
     """
@@ -78,6 +118,7 @@ def newAuthor (name, row):
     author ['authorBooks'] = lt.newList('SINGLE_LINKED')
     lt.addLast(author['authorBooks'],row['book_id'])
     return author
+    
 
 def addAuthor (catalog, name, row):
     """
