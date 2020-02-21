@@ -69,7 +69,7 @@ def newMovie (row):
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
     print(row)
-    movie= {"movie_id": row["id"], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
+    movie= {"movie_id": row["id"], "original_title":row['original_title'], "vote_average":row['vote_average'], "genres":row["genres"]}
     return movie
 
 
@@ -103,9 +103,9 @@ def addMovieMap (catalog, row):
     """
     Adiciona libro al map con key=title
     """
-    movies = catalog['booksMap']
+    movies = catalog['moviesMap']
     movie = newMovie(row)
-    map.put(movies, movie['title'], movie, compareByKey)
+    map.put(movies, movie['original_title'], movie, compareByKey)
 
 
 def newAuthor (name, row):

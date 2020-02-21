@@ -69,8 +69,8 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog ()
         loadData (catalog)
-        print ('Mapa Libros cargados: ' + str(map.size(catalog['booksMap'])))
-        print ('Lista Libros cargados: ' + str(lt.size(catalog['booksList'])))
+        print ('Mapa Libros cargados: ' + str(map.size(catalog['moviesMap'])))
+        print ('Lista Libros cargados: ' + str(lt.size(catalog['moviesList'])))
         print ('Autores cargados: ' + str(map.size(catalog['authors'])))
         
     elif int(inputs[0])==2:
