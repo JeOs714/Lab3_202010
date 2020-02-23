@@ -69,24 +69,24 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog ()
         loadData (catalog)
-        print ('Mapa Libros cargados: ' + str(map.size(catalog['moviesMap'])))
-        print ('Lista Libros cargados: ' + str(lt.size(catalog['moviesList'])))
-        print ('Autores cargados: ' + str(map.size(catalog['authors'])))
+        print ('Mapa peliculas cargadas: ' + str(map.size(catalog['moviesMap'])))
+        print ('Lista peliculas cargadas: ' + str(lt.size(catalog['moviesList'])))
+        print ('Directores cargados: ' + str(map.size(catalog['directors'])))
         
     elif int(inputs[0])==2:
-        bookTitle = input("Nombre del libro a buscar: ")
-        book = controller.getBookInfo (catalog, bookTitle)
+        movieTitle = input("Nombre del libro a buscar: ")
+        movie = controller.getMovieInfo (catalog, movieTitle)
         if book:
-            print("Libro encontrado:",book['title'],",Rating:",book['average_rating'])
+            print("Pelicula encontrada:",movie['original_title'],",Rating:",movie['vote_average'])
         else:
-            print("Libro No encontrado")    
+            print("Pelicula No encontrado")    
 
     elif int(inputs[0])==3:
-        authorName = input("Nombre del autor a buscar: ")
-        author = controller.getAuthorInfo (catalog, authorName)
-        if author:
-            print("Libros del autor",authorName,":",lt.size(author['authorBooks']))
-            print("Promedio de Votación: ",authorName,(author['sum_average_rating']/lt.size(author['authorBooks'])))
+        directorName = input("Nombre del director a buscar: ")
+        director = controller.getDirectorInfo (catalog, directorName)
+        if director:
+            print("Libros del autor", directorName,":",lt.size(director['directorBooks']))
+            print("Promedio de Votación: ",directorName,(director['sum_average_rating']/lt.size(director['directorMovies'])))
         else:
             print("Autor No encontrado")    
 
