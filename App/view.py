@@ -76,7 +76,7 @@ while True:
     elif int(inputs[0])==2:
         movieTitle = input("Nombre del libro a buscar: ")
         movie = controller.getMovieInfo (catalog, movieTitle)
-        if book:
+        if movie:
             print("Pelicula encontrada:",movie['original_title'],",Rating:",movie['vote_average'])
         else:
             print("Pelicula No encontrado")    

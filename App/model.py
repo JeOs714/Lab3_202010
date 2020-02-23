@@ -68,8 +68,30 @@ def newMovie (row):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
-    movie= {"id": row['id'], "original_title":row['original_title'], "vote_average":row['vote_average'], "genres":row['genres']}
+    movie= {"id": row['id'], "title":row['title'], "vote_average":row['vote_average'], "genres":row['genres']}
     return movie
+
+def newDirector (row):
+    """
+    Crea una nueva estructura para modelar un autor y sus libros
+    """
+    director = {'name':"", "directorMovies":None,  "sum_average_rating":0}
+    director ['name'] = row['director_name']
+    #director['sum_average_rating'] = float(row['vote_average'])
+    director ['directorMovies'] = lt.newList('SINGLE_LINKED')
+    lt.addLast(director['directorMovies'],row['id'])
+    return director
+
+def newActor (row):
+    """
+    Crea una nueva estructura para modelar un autor y sus libros
+    """
+    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0}
+    director ['name'] = name
+    director['sum_average_rating'] = float(row['vote_average'])
+    director ['directorMovies'] = lt.newList('SINGLE_LINKED')
+    lt.addLast(director['directorMovies'],row['id'])
+    return director
 
 
 def addBookList (catalog, row):
@@ -100,38 +122,34 @@ def addBookMap (catalog, row):
 
 def addMovieMap (catalog, row):
     """
-    Adiciona libro al map con key=title
+    Adiciona película al map con key=title
     """
     movies = catalog['moviesMap']
     movie = newMovie(row)
-    map.put(movies, movie['original_title'], movie, compareByKey)
+    map.put(movies, movie['title'], movie, compareByKey)
 
+def addActorMap (catalog, row):
+    """
+    Adiciona actor al map con key=title
+    """
+    actors = catalog['actors']
+    actor = newActor(row)
+    map.put(actors, actor['actor'], actor, compareByKey)
 
-def newDirector (name, row):
-    """
-    Crea una nueva estructura para modelar un autor y sus libros
-    """
-    director = {'name':"", "diectorMovies":None,  "sum_average_rating":0}
-    director ['name'] = name
-    director['sum_average_rating'] = float(row['vote_average'])
-    director ['directorMovies'] = lt.newList('SINGLE_LINKED')
-    lt.addLast(director['directorMovies'],row['id'])
-    return director
     
 
-def addDirector (catalog, name, row):
+def addDirectorMap(catalog, row):
     """
     Adiciona un autor al map y sus libros
     """
-    if name:
-        directors = catalog['directors']
-        director=map.get(directors,name,compareByKey)
-        if director:
-            lt.addLast(director['directorMovies'],row['id'])
-            director['sum_average_rating'] += float(row['vote_average'])
-        else:
-            director = newDirector(name, row)
-            map.put(directors, director['name'], director, compareByKey)
+    directors = catalog['directors']
+    director=map.get(directors,row["director_name"],compareByKey)
+    if director:
+        lt.addLast(director['directorMovies'],row['id'])
+        #director['sum_average_rating'] += float(row['vote_average'])
+    else:
+        director = newDirector(row)
+        map.put(directors, director['name'], director, compareByKey)
 
 
 # Funciones de consulta
@@ -166,7 +184,7 @@ def getMovieInMap (catalog, movieTitle):
     """
     Retorna la pelicula desde el mapa a partir del titulo (key)
     """
-    return map.get(catalog['moviesMap'], moviesTitle, compareByKey)
+    return map.get(catalog['moviesMap'], movieTitle, compareByKey)
 
 
 def getDirectorInfo (catalog, directorName):
