@@ -40,7 +40,7 @@ def printMenu():
     print("Bienvenido al Laboratorio 3")
     print("1- Cargar información")
     print("2- Buscar libro por titulo")
-    print("3- Buscar información de autor por nombre ...")
+    print("3- Buscar peliculas con votación positiva por nombre de director")
     print("4- Requerimiento 3 ...")
     print("0- Salir")
 
@@ -74,21 +74,21 @@ while True:
         print ('Directores cargados: ' + str(map.size(catalog['directors'])))
         
     elif int(inputs[0])==2:
-        movieTitle = input("Nombre del libro a buscar: ")
+        movieTitle = input("Nombre de la pelicula a buscar: ")
         movie = controller.getMovieInfo (catalog, movieTitle)
-        if book:
+        if movie:
             print("Pelicula encontrada:",movie['original_title'],",Rating:",movie['vote_average'])
         else:
-            print("Pelicula No encontrado")    
+            print("Pelicula No encontrada")    
 
     elif int(inputs[0])==3:
         directorName = input("Nombre del director a buscar: ")
         director = controller.getDirectorInfo (catalog, directorName)
         if director:
-            print("Libros del autor", directorName,":",lt.size(director['directorBooks']))
+            print("Peliculas del director", directorName,":",lt.size(director['directorMovies']))
             print("Promedio de Votación: ",directorName,(director['sum_average_rating']/lt.size(director['directorMovies'])))
         else:
-            print("Autor No encontrado")    
+            print("Director No encontrado")    
 
 
     elif int(inputs[0])==4:

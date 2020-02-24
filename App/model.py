@@ -68,7 +68,7 @@ def newMovie (row):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
-    movie= {"id": row['id'], "original_title":row['original_title'], "vote_average":row['vote_average'], "genres":row['genres']}
+    movie= {"id": row['movie_id'], "original_title":row['original_title'], "vote_average":row['vote_average'], "genres":row['genres']}
     return movie
 
 
@@ -166,7 +166,7 @@ def getMovieInMap (catalog, movieTitle):
     """
     Retorna la pelicula desde el mapa a partir del titulo (key)
     """
-    return map.get(catalog['moviesMap'], moviesTitle, compareByKey)
+    return map.get(catalog['moviesMap'], movieTitle, compareByKey)
 
 
 def getDirectorInfo (catalog, directorName):
