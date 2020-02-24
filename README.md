@@ -1,3 +1,4 @@
+Daniela Ruiz - Jesús Ospino 
 # Lab3_202010
 
 Este repositorio contiene una plantilla del laboratorio 3 con un ejemplo de implementación de una aplicación en el esquema Modelo-Vista-Controlador que carga datos y realiza consultas usando las estructuras de datos implementadas. Para ejecutar la aplicación debe ejecutar: 
