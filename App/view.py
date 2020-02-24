@@ -21,7 +21,7 @@
 
 import config as cf
 import sys
-import controller 
+import controller as controller
 import csv
 from ADT import list as lt
 from ADT import map as map
@@ -69,17 +69,17 @@ while True:
         print("Cargando información de los archivos ....")
         catalog = initCatalog ()
         loadData (catalog)
-        print ('Mapa peliculas cargadas: ' + str(map.size(catalog['moviesMap'])))
+        print ('Mapa peliculas cargadas: ' + str(map.size(catalog['moviesMapTitle'])))
         print ('Lista peliculas cargadas: ' + str(lt.size(catalog['moviesList'])))
         print ('Directores cargados: ' + str(map.size(catalog['directors'])))
         
     elif int(inputs[0])==2:
-        movieTitle = input("Nombre del libro a buscar: ")
-        movie = controller.getMovieInfo (catalog, movieTitle)
+        movieTitle = input("Nombre del director a buscar: ")
+        movie = controller.getMoviesbyDirector(catalog, movieTitle)
         if movie:
-            print("Pelicula encontrada:",movie['original_title'],",Rating:",movie['vote_average'])
+            print("El número de películas del director "+movieTitle+" con votación positiva es: "+ str(lt.size(movie)))
         else:
-            print("Pelicula No encontrado")    
+            print("Director no encontrado")    
 
     elif int(inputs[0])==3:
         directorName = input("Nombre del director a buscar: ")

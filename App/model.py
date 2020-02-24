@@ -49,11 +49,12 @@ def newCatalogMovies():
     """
     Inicializa el catálogo de peliculas. Retorna el catalogo inicializado.
     """
-    catalog = {'moviesList':None, 'directors':None, 'moviesMap': None, "actors": None}
+    catalog = {'moviesList':None, 'directors':None, 'moviesMapTitle': None, 'moviesMapId': None,  "actors": None}
     catalog['moviesList'] = lt.newList("ARRAY_LIST")
-    catalog['moviesMap'] = map.newMap (329044 , maptype='CHAINING')#10000 books
-    catalog['directors'] = map.newMap (85929 , maptype='PROBING') #5841 authors
-    catalog['actors']=map.newMap (260861  , maptype='PROBING')
+    catalog['moviesMapTitle'] = map.newMap (329044 , maptype='CHAINING')
+    catalog['moviesMapId'] = map.newMap (329044 , maptype='CHAINING')#10000 books
+    catalog['directors'] = map.newMap (4003 , maptype='PROBING') #5841 authors
+    catalog['actors']=map.newMap (260861  , maptype='PROBING')#85929
 
     return catalog
 
@@ -68,7 +69,7 @@ def newMovie (row):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
-    movie= {"id": row['id'], "title":row['title'], "vote_average":row['vote_average'], "genres":row['genres']}
+    movie= {"id": row['id'], "title":row['title'], "vote_average": float(row['vote_average']), "genres":row['genres']}
     return movie
 
 def newDirector (row):
@@ -78,7 +79,7 @@ def newDirector (row):
     director = {'name':"", "directorMovies":None,  "sum_average_rating":0}
     director ['name'] = row['director_name']
     #director['sum_average_rating'] = float(row['vote_average'])
-    director ['directorMovies'] = lt.newList('SINGLE_LINKED')
+    director ['directorMovies'] = lt.newList('ARRAY_LIST')
     lt.addLast(director['directorMovies'],row['id'])
     return director
 
@@ -120,13 +121,21 @@ def addBookMap (catalog, row):
     book = newBook(row)
     map.put(books, book['title'], book, compareByKey)
 
-def addMovieMap (catalog, row):
+def addMovieMapTitle (catalog, row):
     """
     Adiciona película al map con key=title
     """
-    movies = catalog['moviesMap']
+    movies = catalog['moviesMapTitle']
     movie = newMovie(row)
     map.put(movies, movie['title'], movie, compareByKey)
+
+def addMovieMapId (catalog, row):
+    """
+    Adiciona película al map con key=id
+    """
+    movies = catalog['moviesMapId']
+    movie = newMovie(row)
+    map.put(movies, movie['id'], movie, compareByKey)
 
 def addActorMap (catalog, row):
     """
@@ -174,24 +183,48 @@ def getMovieInList (catalog, movieTitle):
     return None
 
 
-def getBookInMap (catalog, bookTitle):
+def getBookInMapTitle (catalog, bookTitle):
     """
     Retorna el libro desde el mapa a partir del titulo (key)
     """
-    return map.get(catalog['booksMap'], bookTitle, compareByKey)
+    return map.get(catalog['booksMapTitle'], bookTitle, compareByKey)
 
-def getMovieInMap (catalog, movieTitle):
+def getBookInMapId (catalog, Id):
+    """
+    Retorna el libro desde el mapa a partir del titulo (key)
+    """
+    return map.get(catalog['booksMapId'], Id, compareByKey)
+
+def getMovieInMapTitle (catalog, movieTitle):
     """
     Retorna la pelicula desde el mapa a partir del titulo (key)
     """
-    return map.get(catalog['moviesMap'], movieTitle, compareByKey)
+    return map.get(catalog['moviesMapTitle'], movieTitle, compareByKey)
+
+def getMovieInMapId (catalog, Id):
+    """
+    Retorna la pelicula desde el mapa a partir del titulo (key)
+    """
+    return map.get(catalog['moviesMapId'], Id, compareByKey)
 
 
 def getDirectorInfo (catalog, directorName):
     """
-    Retorna el autor a partir del nombre
+    Retorna el director a partir del nombre
     """
     return map.get(catalog['directors'], directorName, compareByKey)
+
+def getMoviesbyDirector(catalog, director):
+    """
+    Busca las películas con votación mayor o igual a 6 del director dado
+    """
+    Bestmovies= lt.newList("ARRAY_LIST")
+    Id= director["directorMovies"]
+    for movie in Id["elements"]:
+        pelicula= getMovieInMapId(catalog, movie)
+        if pelicula["vote_average"] >= 6:
+            lt.addLast(Bestmovies, pelicula)
+    return Bestmovies
 
 # Funciones de comparacion
 

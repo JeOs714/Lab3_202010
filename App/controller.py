@@ -96,7 +96,8 @@ def loadMovies (catalog, sep=';'):
             # Se adiciona el libro a la lista de libros
             model.addMovieList(catalog, row)
             # Se adiciona el libro al mapa de libros (key=title)
-            model.addMovieMap(catalog, row)
+            model.addMovieMapTitle(catalog, row)
+            model.addMovieMapId(catalog, row)
             # Se obtienen los autores del libro
             #authors = row['director_name'].split(",")
             # Cada autor, se crea en la lista de autores del catalogo, y se 
@@ -138,10 +139,10 @@ def loadDataMovies (catalog):
 # Funciones llamadas desde la vista y enviadas al modelo
 
 
-def getDirectorInfo(catalog, movieTitle):
+def getMovieInfo(catalog, movieTitle):
     t1_start = tt.time() #tiempo inicial
     #book=model.getBookInList(catalog, bookTitle)
-    movie=model.getMovieInMap(catalog, movieTitle)
+    movie=model.getMovieInMapTitle(catalog, movieTitle)
     t1_stop = tt.time() #tiempo final
     print("Tiempo de ejecución buscar pelicula:",t1_stop-t1_start," segundos")   
     if movie:
@@ -151,9 +152,23 @@ def getDirectorInfo(catalog, movieTitle):
 
 def getDirectorInfo(catalog, directorName):
     #author=model.getAuthorInfo(catalog, authorName)
+    t1_start = tt.time() #tiempo inicial
     director=model.getDirectorInfo(catalog, directorName)
+    t1_stop = tt.time() #tiempo final
+    print("Tiempo de ejecución buscar pelicula:",t1_stop-t1_start," segundos")
     if director:
         return director
     else:
         return None    
+
+def getMoviesbyDirector(catalog, directorName):
+    director= getDirectorInfo(catalog, directorName)
+
+    if director:
+        return model.getMoviesbyDirector(catalog, director)
+    else:
+        return None
+
+
+
 
