@@ -51,10 +51,10 @@ def newCatalogMovies():
     """
     catalog = {'moviesList':None, 'directors':None, 'moviesMapTitle': None, 'moviesMapId': None,  "actors": None}
     catalog['moviesList'] = lt.newList("ARRAY_LIST")
-    catalog['moviesMapTitle'] = map.newMap (329044 , maptype='CHAINING')
-    catalog['moviesMapId'] = map.newMap (329044 , maptype='CHAINING')#10000 books
-    catalog['directors'] = map.newMap (4003 , maptype='PROBING') #5841 authors
-    catalog['actors']=map.newMap (260861  , maptype='PROBING')#85929
+    catalog['moviesMapTitle'] = map.newMap (170003, maptype='CHAINING')
+    catalog['moviesMapId'] = map.newMap (170003, maptype='CHAINING')#329044 movies
+    catalog['directors'] = map.newMap (175003, maptype='PROBING') #85929 directors
+    catalog['actors']=map.newMap (131011, maptype='CHAINING')#260861 actors 
 
     return catalog
 
@@ -218,6 +218,7 @@ def getMoviesbyDirector(catalog, director):
     """
     Busca las películas con votación mayor o igual a 6 del director dado
     """
+    
     Bestmovies= lt.newList("ARRAY_LIST")
     Id= director["directorMovies"]
     for movie in Id["elements"]:

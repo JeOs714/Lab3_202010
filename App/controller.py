@@ -77,7 +77,7 @@ def loadMoviesCasting (catalog, sep=';'):
             #for director in directors:
                 #model.addDirector (catalog, director.strip(), row)
     t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")  
+    print("Tiempo de ejecución carga directores:",t1_stop-t1_start," segundos")  
 
 
 def loadMovies (catalog, sep=';'):
@@ -105,7 +105,7 @@ def loadMovies (catalog, sep=';'):
             #for author in authors:
                 #model.addAuthor (catalog, author.strip(), row)
     t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución carga libros:",t1_stop-t1_start," segundos")   
+    print("Tiempo de ejecución carga películas:",t1_stop-t1_start," segundos")   
 
 
 
@@ -152,18 +152,18 @@ def getMovieInfo(catalog, movieTitle):
 
 def getDirectorInfo(catalog, directorName):
     #author=model.getAuthorInfo(catalog, authorName)
-    t1_start = tt.time() #tiempo inicial
+    
     director=model.getDirectorInfo(catalog, directorName)
-    t1_stop = tt.time() #tiempo final
-    print("Tiempo de ejecución buscar pelicula:",t1_stop-t1_start," segundos")
     if director:
         return director
     else:
         return None    
 
 def getMoviesbyDirector(catalog, directorName):
+    t1_start = tt.time() #tiempo inicial
     director= getDirectorInfo(catalog, directorName)
-
+    t1_stop = tt.time() #tiempo final
+    print("Tiempo de ejecución buscar pelicula:",t1_stop-t1_start," segundos")
     if director:
         return model.getMoviesbyDirector(catalog, director)
     else:
