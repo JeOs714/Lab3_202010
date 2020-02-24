@@ -1,0 +1,36 @@
+RETO 1:
+
+2000 DATOS:
+
+CARGA DE DATOS:  0.046875  segundos cargando películas - 0.015625 segundos cargando directores. 
+
+FUNCIÓN 1: 0.0 segundos 
+
+
+ARCHIVO GRANDE:
+
+CARGA DE DATOS: 6.734375   segundos cargando películas -  3.328125  segundos cargando directores. 
+
+FUNCIÓN 1: 1.421875  segundos
+----------------------------------------------------------------------------------------------------------------------------------------------
+RETO 2:
+
+2000 DATOS:
+
+CARGA DE DATOS:   0.09375 segundos cargando películas -  0.046875 segundos cargando directores. 
+
+FUNCIÓN 1: 0.0 segundos. 
+
+
+ARCHIVO GRANDE:
+
+CARGA DE DATOS: 11.796875  segundos cargando películas - 4.34375 segundos cargando directores. 
+
+FUNCIÓN 1: 0.0 segundos. 
+
+________________________________________________________________________
+
+La carga de datos con la implementación hecha en el reto 1, que era apartir de listas, es más rápida que la implementación del reto
+2, hecha a partir de maps. Sin embargo, el tiempo de respuesta para el peor caso (archivo grande) del requirimiento 1 
+es casi nulo en el reto 2, mientras que para el reto 1 toma aproximandamente 1 segundo extra. A partir de lo anterior, 
+se pueden evidenciar los pros y contras a nivel de tiempos en x labor de los 2 tipos de implementación. 
