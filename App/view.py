@@ -39,13 +39,8 @@ operación solicitada
 def printMenu():
     print("Bienvenido al Laboratorio 3")
     print("1- Cargar información")
-<<<<<<< HEAD
-    print("2- Buscar libro por titulo")
-    print("3- Buscar peliculas con votación positiva por nombre de director")
-=======
     print("2- Buscar películas con votación positiva por director")
     print("3- Buscar información de autor por nombre ...")
->>>>>>> bf05e550c2b00db6d67202bcc348c069dd671579
     print("4- Requerimiento 3 ...")
     print("0- Salir")
 
@@ -76,26 +71,17 @@ while True:
         loadData (catalog)
         print ('Mapa peliculas cargadas: ' + str(map.size(catalog['moviesMapTitle'])))
         print ('Lista peliculas cargadas: ' + str(lt.size(catalog['moviesList'])))
-        print ('Directores cargados: ' + str(map.size(catalog['directors'])))
+        print ('Directores cargados: ' + str(map.size(catalog['directorsName'])))
         
     elif int(inputs[0])==2:
-<<<<<<< HEAD
-        movieTitle = input("Nombre de la pelicula a buscar: ")
-        movie = controller.getMovieInfo (catalog, movieTitle)
-        if movie:
-            print("Pelicula encontrada:",movie['original_title'],",Rating:",movie['vote_average'])
-        else:
-            print("Pelicula No encontrada")    
-=======
         movieTitle = input("Nombre del director a buscar: ")
-        movie = controller.getMoviesbyDirector(catalog, movieTitle)
+        movie = controller.getMoviesbyDirectorVote(catalog, movieTitle)
         if movie:
             print("El número de películas del director "+movieTitle+" con votación positiva es: "+ str(lt.size(movie)))
         else:
             print("Director no encontrado")    
->>>>>>> bf05e550c2b00db6d67202bcc348c069dd671579
 
-    elif int(inputs[0])==3:
+    elif int(inputs[0])==4:
         directorName = input("Nombre del director a buscar: ")
         director = controller.getDirectorInfo (catalog, directorName)
         if director:
@@ -105,7 +91,21 @@ while True:
             print("Director No encontrado")    
 
 
-    elif int(inputs[0])==4:
+    elif int(inputs[0])==3:
+        movie_name= input("Ingrese el nombre exacto de la película que desea buscar")
+        movie=  controller.getMoviebyName(catalog, movie_name)
+        if movie:
+            print("La película ", movie_name, " tiene: ")
+            print("Promedio de Votación: ",movie["vote_average"], "Votos totales", movie["vote_count"], "y fue dirigida por: ", movie["director"] )
+        else:
+            print("Nombre de película no encontrada")  
+    elif int(inputs[0])==5:
+        label = input (" ")
+        pass
+    elif int(inputs[0])==6:
+        label = input (" ")
+        pass
+    elif int(inputs[0])==7:
         label = input (" ")
         pass
     else:

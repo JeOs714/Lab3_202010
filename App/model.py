@@ -53,7 +53,8 @@ def newCatalogMovies():
     catalog['moviesList'] = lt.newList("ARRAY_LIST")
     catalog['moviesMapTitle'] = map.newMap (170003, maptype='CHAINING')
     catalog['moviesMapId'] = map.newMap (170003, maptype='CHAINING')#329044 movies
-    catalog['directors'] = map.newMap (175003, maptype='PROBING') #85929 directors
+    catalog['directorsName'] = map.newMap (175003, maptype='PROBING') #85929 directors
+    catalog['directorsId'] = map.newMap (175003, maptype='PROBING') #85929 directors
     catalog['actors']=map.newMap (131011, maptype='CHAINING')#260861 actors 
 
     return catalog
@@ -65,12 +66,15 @@ def newBook (row):
     book = {"book_id": row['book_id'], "title":row['title'], "average_rating":row['average_rating'], "ratings_count":row['ratings_count']}
     return book
 
+
+    movie= {"id": row['id'], "title":row['title'], "vote_average": float(row['vote_average']),"vote_count": float(row["vote_count"]) ,"genres":row['genres']}
+    return movie
 def newMovie (row):
     """
     Crea una nueva estructura para almacenar los actores de una pelicula 
     """
 
-    movie= {"id": row['id'], "title":row['title'], "vote_average": float(row['vote_average']), "genres":row['genres']}
+    movie= {"id": row['id'], "title":row['title'], "vote_average": float(row['vote_average']),"vote_count": float(row["vote_count"]) ,"genres":row['genres']}
     return movie
 
 def newDirector (row):
@@ -148,11 +152,11 @@ def addActorMap (catalog, row):
 
     
 
-def addDirectorMap(catalog, row):
+def addDirectorName(catalog, row):
     """
     Adiciona un autor al map y sus libros
     """
-    directors = catalog['directors']
+    directors = catalog['directorsName']
     director=map.get(directors,row["director_name"],compareByKey)
     if director:
         lt.addLast(director['directorMovies'],row['id'])
@@ -160,6 +164,14 @@ def addDirectorMap(catalog, row):
     else:
         director = newDirector(row)
         map.put(directors, director['name'], director, compareByKey)
+def addDirectorId(catalog, row):
+    """
+    Adiciona un autor al map y sus libros
+    """
+    directors = catalog['directorsId']
+    director= newDirector(row)
+    map.put(directors, row["id"], director, compareByKey )
+    
 
 
 # Funciones de consulta
@@ -214,20 +226,32 @@ def getDirectorInfo (catalog, directorName):
     """
     Retorna el director a partir del nombre
     """
-    return map.get(catalog['directors'], directorName, compareByKey)
+    return map.get(catalog['directorsName'], directorName, compareByKey)
 
-def getMoviesbyDirector(catalog, director):
+def getMoviebyDirectorId(catalog, directorId):
     """
     Busca las películas con votación mayor o igual a 6 del director dado
     """
-    
+    return map.get(catalog["directorsId"], directorId, compareByKey)
+
+def getMoviesbyDirectorVote(catalog, director):
+    """
+    Busca las películas con votación mayor o igual a 6 del director dado
+    """
     Bestmovies= lt.newList("ARRAY_LIST")
     Id= director["directorMovies"]
     for movie in Id["elements"]:
         pelicula= getMovieInMapId(catalog, movie)
         if pelicula["vote_average"] >= 6:
             lt.addLast(Bestmovies, pelicula)
-    return Bestmovies
+def getMoviebyName(catalog, movieTitle):
+    movie= getMovieInMapTitle(catalog, movieTitle)
+    director= getMoviebyDirectorId(catalog, movie["id"])
+    movie["director"]= director["name"]
+    print(movie)
+
+        
+    return movie 
 
 # Funciones de comparacion
 

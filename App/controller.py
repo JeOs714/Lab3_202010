@@ -67,10 +67,11 @@ def loadMoviesCasting (catalog, sep=';'):
         spamreader = csv.DictReader(csvfile, dialect=dialect)
         for row in spamreader: 
             # Se adiciona el libro a la lista de libros
-            model.addDirectorMap(catalog, row)
+            model.addDirectorName(catalog, row)
+            model.addDirectorId(catalog, row)
             # Se adiciona el libro al mapa de libros (key=title)
             #model.addActorMap(catalog, row)
-            # Se obtienen los autores del libro
+            # Se obtienen los autores del libro 
             #directors = row['director_name'].split(",")
             # Cada autor, se crea en la lista de autores del catalogo, y se 
             # adiciona un libro en la lista de dicho autor (apuntador al libro)
@@ -158,16 +159,25 @@ def getDirectorInfo(catalog, directorName):
         return director
     else:
         return None    
-
-def getMoviesbyDirector(catalog, directorName):
+        
+def getMoviesbyDirectorVote(catalog, directorName):
     t1_start = tt.time() #tiempo inicial
     director= getDirectorInfo(catalog, directorName)
     t1_stop = tt.time() #tiempo final
     print("Tiempo de ejecución buscar pelicula:",t1_stop-t1_start," segundos")
     if director:
-        return model.getMoviesbyDirector(catalog, director)
+        return model.getMoviesbyDirectorVote(catalog, director)
     else:
         return None
+
+def getMoviebyName(catalog, movieTitle):
+    movie= getMovieInfo(catalog, movieTitle)
+    if movie:
+        return model.getMoviebyName(catalog, movieTitle)
+    else: 
+        return None
+        
+
 
 
 
