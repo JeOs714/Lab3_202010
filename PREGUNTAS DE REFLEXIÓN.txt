@@ -12,3 +12,8 @@ Usando apuntadores a la lista inicial, asimismo, mediante el uso de singlelinked
 ¿Cómo se pueden utilizar las estructuras de datos vistas en clase? ¿Cuáles campos
 son los ideales para definir la llave de un map?
 Los Id, los nombres de las películas, director y actores. 
+¿Cómo reduciría la cantidad de memoria utilizada si tenemos la misma información almacenada en listas y tablas de hash?
+Usando apuntadores hacia la lista de la tabla de hash, asimismo, usando listas encadenadas. 
+ ¿A qué conclusiones llegan a partir de analizar los resultados de complejidad temporal y desempeño obtenidos en comparación con la implementación reto 1?
+La complejidad temporal en la inserción de información es mucho menor al usar listas, sin embargo, para dar respuesta a requerimientos 
+las tablas de hash poseen una complejidad menor.
