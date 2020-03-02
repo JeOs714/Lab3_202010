@@ -58,6 +58,15 @@ def loadData (catalog):
     """
     controller.loadDataMovies(catalog)
 
+def printMovies (movies):
+    if movies:
+        print (' Estas son las peliculas: ')
+        for movie in movies["movies"]["elements"]:
+
+            print ('Titulo: ' + movie['title'] + ' Rating: ' + str(movie['vote_average']))
+    else:
+        print ('No se encontraron peliculas')
+
 
 """
 Menu principal
@@ -80,17 +89,6 @@ while True:
             print("El número de películas del director "+movieTitle+" con votación positiva es: "+ str(lt.size(movie)))
         else:
             print("Director no encontrado")    
-
-    elif int(inputs[0])==4:
-        directorName = input("Nombre del director a buscar: ")
-        director = controller.AllmoviesDirector(catalog, directorName)
-        if director:
-            print("Peliculas del director", directorName,":",lt.size(director['directorMovies']))
-            print("Promedio de Votación: ",directorName,(director['sum_average_rating']/lt.size(director['directorMovies'])))
-        else:
-            print("Director No encontrado")    
-
-
     elif int(inputs[0])==3:
         movie_name= input("Ingrese el nombre exacto de la película que desea buscar: ")
         movie=  controller.getMoviebyName(catalog, movie_name)
@@ -98,10 +96,27 @@ while True:
             print("La película ", movie_name, " tiene: ")
             print("Promedio de Votación: ",movie["vote_average"], "Votos totales", movie["vote_count"], "y fue dirigida por: ", movie["director"] )
         else:
-            print("Nombre de película no encontrada")  
+            print("Nombre de película no encontrada") 
+    elif int(inputs[0])==4:
+        directorName = input("Nombre del director a buscar: ")
+        director = controller.AllmoviesDirector(catalog, directorName)
+        if director:
+            print("Peliculas del director", directorName,":",lt.size(director['directorMovies']))
+            print("Promedio de Votación: ",(director['sum_average_rating']/lt.size(director['directorMovies'])))
+            printMovies(director)
+        else:
+            print("Director No encontrado")    
+ 
     elif int(inputs[0])==5:
-        label = input (" ")
-        pass
+        ActorName = input("Nombre del director a buscar: ")
+        actor = controller.AllmoviesActor(catalog, ActorName)
+        if actor:
+            print("Peliculas del director", ActorName,":",lt.size(actor['actorMovies']))
+            print("Promedio de Votación: ",(director['sum_average_rating']/lt.size(director['actorMovies'])))
+            print("El director que más lo ha dirigido es", actor["dir"])
+            printMovies(actor)
+        else:
+            print("Director No encontrado")  
     elif int(inputs[0])==6:
         label = input (" ")
         pass

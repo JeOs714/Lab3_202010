@@ -69,6 +69,8 @@ def loadMoviesCasting (catalog, sep=';'):
             # Se adiciona el libro a la lista de libros
             model.addDirectorName(catalog, row)
             model.addDirectorId(catalog, row)
+            model.addActorName(catalog, row)
+            #model.addActorId(catalog, row)
             # Se adiciona el libro al mapa de libros (key=title)
             #model.addActorMap(catalog, row)
             # Se obtienen los autores del libro 
@@ -104,7 +106,7 @@ def loadMovies (catalog, sep=';'):
             # Cada autor, se crea en la lista de autores del catalogo, y se 
             # adiciona un libro en la lista de dicho autor (apuntador al libro)
             #for author in authors:
-                #model.addAuthor (catalog, author.strip(), row)
+                #model.addAuthor (catalog, author.strip(|), row)
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga películas:",t1_stop-t1_start," segundos")   
 
@@ -159,6 +161,14 @@ def getDirectorInfo(catalog, directorName):
         return director
     else:
         return None    
+def getActorInfo(catalog, directorName):
+    #author=model.getAuthorInfo(catalog, authorName)
+    
+    director=model.getActorInfo(catalog, directorName)
+    if director:
+        return director
+    else:
+        return None    
         
 def getMoviesbyDirectorVote(catalog, directorName):
     t1_start = tt.time() #tiempo inicial
@@ -180,8 +190,14 @@ def getMoviebyName(catalog, movieTitle):
 def AllmoviesDirector(catalog, dirname):
     director= getDirectorInfo(catalog, dirname)
     if director:
-        print(director)
         return model.AllmoviesDirector(catalog, dirname, director)
+    else:
+        return None
+
+def AllmoviesActor(catalog, dirname):
+    director= getActorInfo(catalog, dirname)
+    if director:
+        return model.AllmoviesActor(catalog, dirname, director)
     else:
         return None
 

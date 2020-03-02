@@ -55,7 +55,8 @@ def newCatalogMovies():
     catalog['moviesMapId'] = map.newMap (170003, maptype='CHAINING')#329044 movies
     catalog['directorsName'] = map.newMap (175003, maptype='PROBING') #85929 directors
     catalog['directorsId'] = map.newMap (175003, maptype='PROBING') #85929 directors
-    catalog['actors']=map.newMap (131011, maptype='CHAINING')#260861 actors 
+    #catalog['actorsId']=map.newMap (131011, maptype='CHAINING')#260861 actors 
+    catalog['actorsName']=map.newMap (131011, maptype='CHAINING')#260861 actors 
 
     return catalog
 
@@ -81,23 +82,27 @@ def newDirector (row):
     """
     Crea una nueva estructura para modelar un autor y sus libros
     """
-    director = {'name':"", "directorMovies":None,  "sum_average_rating":0}
+    director = {'name':"", "directorMovies":None,  "sum_average_rating":0, "movies": None}
     director ['name'] = row['director_name']
     #director['sum_average_rating'] = float(row['vote_average'])
     director ['directorMovies'] = lt.newList('ARRAY_LIST')
+    director ['movies'] = lt.newList('ARRAY_LIST')
     lt.addLast(director['directorMovies'],row['id'])
     return director
 
-def newActor (row):
+def newActor (row, name):
     """
     Crea una nueva estructura para modelar un autor y sus libros
     """
-    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0, "movies": None}
+    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0, "movies": None, "directors": None, "dir":""}
     director ['name'] = name
-    director['sum_average_rating'] = float(row['vote_average'])
-    director ['directorMovies'] = lt.newList('SINGLE_LINKED')
-    director["movies"]=lt.newList("SINGLE_LINKED")
-    lt.addLast(director['directorMovies'], row['id'])
+    #director['sum_average_rating'] = float(row['vote_average'])
+    director ['ActorMovies'] = lt.newList('ARRAY_LIST')
+    director["movies"]=lt.newList("ARRAY_LIST")
+    lt.addLast(director['ActorMovies'], row['id'])
+    director["directors"]= lt.newList("ARRAY_LIST")
+    lt.addLast(director['directors'], row['director_name'])
+
     return director
 
 
@@ -143,15 +148,34 @@ def addMovieMapId (catalog, row):
     movie = newMovie(row)
     map.put(movies, movie['id'], movie, compareByKey)
 
-def addActorMap (catalog, row):
-    """
-    Adiciona actor al map con key=title
-    """
-    actors = catalog['actors']
-    actor = newActor(row)
-    map.put(actors, actor['actor'], actor, compareByKey)
 
+def addActorName(catalog, row):
+    """
+    Adiciona un autor al map y sus libros
+    """
+    directors = catalog['actorsName']
+    actors= ["actor1_name","actor2_name","actor3_name","actor4_name","actor5_name"]
+    for actorname in actors:
+        if row[actorname] != "none":
+            actor=map.get(directors,row[actorname],compareByKey)
+            if actor:
+                lt.addLast(actor['ActorMovies'],row['id'])
+                lt.addLast(actor['directors'],row['director_name'])
+                #director['sum_average_rating'] += float(row['vote_average'])
+            else:
+                director = newActor(row,row[actorname])
+                map.put(directors, director['name'], director, compareByKey)
+"""
+def addActorId(catalog, row):
     
+    Adiciona un autor al map y sus libros
+
+    directors = catalog['actorsId']
+    director= newActor(row, row[])
+    map.put(directors, row["id"], director, compareByKey )
+
+
+"""
 
 def addDirectorName(catalog, row):
     """
@@ -228,6 +252,12 @@ def getDirectorInfo (catalog, directorName):
     Retorna el director a partir del nombre
     """
     return map.get(catalog['directorsName'], directorName, compareByKey)
+def getActorInfo (catalog, directorName):
+    """
+    Retorna el director a partir del nombre
+    """
+    return map.get(catalog['actorsName'], directorName, compareByKey)
+
 
 def getMoviebyDirectorId(catalog, directorId):
     """
@@ -254,11 +284,24 @@ def getMoviebyName(catalog, movieTitle):
 
 def AllmoviesDirector(catalog, dirname, director):
     for i in director["directorMovies"]['elements']:
-        print(i)
         movie= getMovieInMapId(catalog, i)
         director["sum_average_rating"]+= movie["vote_average"]
+        lt.addLast(director["movies"], movie)
     return director 
 
+def AllmoviesActor(catalog, actname, actor):
+    print(actor)
+    for i in actor["ActorMovies"]['elements']:
+        movie= getMovieInMapId(catalog, i)
+        actor["sum_average_rating"]+= movie["vote_average"]
+        lt.addLast(actor["movies"], movie)
+    numdirector=-1
+    for direc in actor["directors"]["elements"]:
+            cont = actor["directors"]["elements"].count(direc)
+            if numdirector < cont:
+                numdirector = cont
+                actor["dir"] = direc
+    return actor 
 
 
 # Funciones de comparacion
