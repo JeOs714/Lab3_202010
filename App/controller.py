@@ -176,6 +176,15 @@ def getMoviebyName(catalog, movieTitle):
         return model.getMoviebyName(catalog, movieTitle)
     else: 
         return None
+
+def AllmoviesDirector(catalog, dirname):
+    director= getDirectorInfo(catalog, dirname)
+    if director:
+        print(director)
+        return model.AllmoviesDirector(catalog, dirname, director)
+    else:
+        return None
+
         
 
 

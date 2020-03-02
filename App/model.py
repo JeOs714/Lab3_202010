@@ -92,11 +92,12 @@ def newActor (row):
     """
     Crea una nueva estructura para modelar un autor y sus libros
     """
-    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0}
+    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0, "movies": None}
     director ['name'] = name
     director['sum_average_rating'] = float(row['vote_average'])
     director ['directorMovies'] = lt.newList('SINGLE_LINKED')
-    lt.addLast(director['directorMovies'],row['id'])
+    director["movies"]=lt.newList("SINGLE_LINKED")
+    lt.addLast(director['directorMovies'], row['id'])
     return director
 
 
@@ -248,10 +249,17 @@ def getMoviebyName(catalog, movieTitle):
     movie= getMovieInMapTitle(catalog, movieTitle)
     director= getMoviebyDirectorId(catalog, movie["id"])
     movie["director"]= director["name"]
-    print(movie)
-
-        
+      
     return movie 
+
+def AllmoviesDirector(catalog, dirname, director):
+    for i in director["directorMovies"]['elements']:
+        print(i)
+        movie= getMovieInMapId(catalog, i)
+        director["sum_average_rating"]+= movie["vote_average"]
+    return director 
+
+
 
 # Funciones de comparacion
 

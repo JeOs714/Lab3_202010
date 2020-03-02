@@ -83,7 +83,7 @@ while True:
 
     elif int(inputs[0])==4:
         directorName = input("Nombre del director a buscar: ")
-        director = controller.getDirectorInfo (catalog, directorName)
+        director = controller.AllmoviesDirector(catalog, directorName)
         if director:
             print("Peliculas del director", directorName,":",lt.size(director['directorMovies']))
             print("Promedio de Votación: ",directorName,(director['sum_average_rating']/lt.size(director['directorMovies'])))
@@ -92,7 +92,7 @@ while True:
 
 
     elif int(inputs[0])==3:
-        movie_name= input("Ingrese el nombre exacto de la película que desea buscar")
+        movie_name= input("Ingrese el nombre exacto de la película que desea buscar: ")
         movie=  controller.getMoviebyName(catalog, movie_name)
         if movie:
             print("La película ", movie_name, " tiene: ")
