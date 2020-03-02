@@ -112,8 +112,8 @@ while True:
         ActorName = input("Nombre del director a buscar: ")
         actor = controller.AllmoviesActor(catalog, ActorName)
         if actor:
-            print("Peliculas del director", ActorName,":",lt.size(actor['actorMovies']))
-            print("Promedio de Votación: ",(director['sum_average_rating']/lt.size(director['actorMovies'])))
+            print("Peliculas del director", ActorName,":",lt.size(actor['ActorMovies']))
+            print("Promedio de Votación: ",(actor['sum_average_rating']/lt.size(actor['ActorMovies'])))
             print("El director que más lo ha dirigido es", actor["dir"])
             printMovies(actor)
         else:

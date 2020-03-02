@@ -290,7 +290,6 @@ def AllmoviesDirector(catalog, dirname, director):
     return director 
 
 def AllmoviesActor(catalog, actname, actor):
-    print(actor)
     for i in actor["ActorMovies"]['elements']:
         movie= getMovieInMapId(catalog, i)
         actor["sum_average_rating"]+= movie["vote_average"]
