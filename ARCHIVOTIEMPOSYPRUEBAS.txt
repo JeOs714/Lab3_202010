@@ -2,31 +2,65 @@ RETO 1:
 
 2000 DATOS:
 
-CARGA DE DATOS:  0.046875  segundos cargando películas - 0.015625 segundos cargando directores. 
+CARGA DE DATOS:  0.046875  segundos cargando películas - 0.015625 segundos cargando directores y actores. 
 
-FUNCIÓN 1: 0.0 segundos 
+FUNCIÓN 1: 0.018002748489379883  segundos
+
+FUNCIÓN 2: 0.01704549789428711  segundos
+
+FUNCIÓN 3: 0.014017581939697266  segundos
+
+FUNCIÓN 4: 0.035004377365112305  segundos
+
+FUNCIÓN 5:0.009007692337036133  segundos
 
 
 ARCHIVO GRANDE:
 
-CARGA DE DATOS: 6.734375   segundos cargando películas -  3.328125  segundos cargando directores. 
+CARGA DE DATOS: 7.890625   segundos cargando películas -  3.71875  segundos cargando directores y actores. 
 
-FUNCIÓN 1: 1.421875  segundos
+FUNCIÓN 1: 0.0 segundos 
+
+FUNCIÓN 2: 
+
+FUNCIÓN 3:
+
+FUNCIÓN 4:
+
+FUNCIÓN 5:
+
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 RETO 2:
 
 2000 DATOS:
 
-CARGA DE DATOS:   0.09375 segundos cargando películas -  0.046875 segundos cargando directores. 
+CARGA DE DATOS:   0.09375 segundos cargando películas -  0.046875 segundos cargando los maps. 
 
-FUNCIÓN 1: 0.0 segundos. 
+FUNCIÓN 1: 0.0019350051879882812 segundos. 
+
+FUNCIÓN 2: 0.0020024776458740234  segundos
+
+FUNCIÓN 3: 0.005999565124511719  segundos
+
+FUNCIÓN 4: 0.02424907684326172  segundos
+
+FUNCIÓN 5:  0.0020034313201904297  segundos
 
 
 ARCHIVO GRANDE:
 
-CARGA DE DATOS: 11.796875  segundos cargando películas - 4.34375 segundos cargando directores. 
+CARGA DE DATOS: 11.796875  segundos cargando películas - 4.34375 segundos cargando los maps. 
 
 FUNCIÓN 1: 0.0 segundos. 
+
+FUNCIÓN 2: 
+
+FUNCIÓN 3:
+
+FUNCIÓN 4:
+
+FUNCIÓN 5:
 
 ________________________________________________________________________
 

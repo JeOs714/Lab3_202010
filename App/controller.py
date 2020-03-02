@@ -60,7 +60,7 @@ def loadMoviesCasting (catalog, sep=';'):
     referencia a la pelicula que se esta procesando.
     """
     t1_start = process_time() #tiempo inicial
-    booksfile = cf.data_dir + 'GoodReads/MoviesCastingRaw-small.csv'
+    booksfile = cf.data_dir + 'GoodReads/AllMoviesCastingRaw.csv'
     dialect = csv.excel()
     dialect.delimiter=sep
     with open(booksfile, encoding="utf-8-sig") as csvfile:
@@ -80,7 +80,7 @@ def loadMoviesCasting (catalog, sep=';'):
             #for director in directors:
                 #model.addDirector (catalog, director.strip(), row)
     t1_stop = process_time() #tiempo final
-    print("Tiempo de ejecución carga directores:",t1_stop-t1_start," segundos")  
+    print("Tiempo de ejecución carga directores y actores:",t1_stop-t1_start," segundos")  
 
 
 def loadMovies (catalog, sep=';'):
@@ -90,7 +90,7 @@ def loadMovies (catalog, sep=';'):
     referencia al libro que se esta procesando.
     """
     t1_start = process_time() #tiempo inicial
-    moviefile = cf.data_dir + 'GoodReads/SmallMoviesDetailsCleaned.csv'
+    moviefile = cf.data_dir + 'GoodReads/AllMoviesDetailsCleaned.csv'
     dialect = csv.excel()
     dialect.delimiter=sep
     with open(moviefile, encoding="utf-8-sig") as csvfile:
@@ -105,8 +105,8 @@ def loadMovies (catalog, sep=';'):
             #authors = row['director_name'].split(",")
             # Cada autor, se crea en la lista de autores del catalogo, y se 
             # adiciona un libro en la lista de dicho autor (apuntador al libro)
-            #for author in authors:
-                #model.addAuthor (catalog, author.strip(|), row)
+            
+            model.addGenre(catalog, row["genres"], row)
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución carga películas:",t1_stop-t1_start," segundos")   
 
@@ -135,7 +135,6 @@ def loadDataMovies (catalog):
     """
     
     loadMovies(catalog)
-    sort.mergesort(catalog['moviesList'], compareratings)
     loadMoviesCasting(catalog)
     
 
@@ -200,7 +199,12 @@ def AllmoviesActor(catalog, dirname):
         return model.AllmoviesActor(catalog, dirname, director)
     else:
         return None
-
+def getGenre(catalog, name):
+    genre= model.getGenre(catalog, name)
+    if genre:
+        return genre
+    else:
+        return None
         
 
 

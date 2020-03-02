@@ -1,0 +1,14 @@
+Preguntas de reflexión:
+
+¿Qué estructura debería tener el catálogo?
+El catálogo está conformado por una lista de películas, un mapa de películas por título, un mapa de películas por Id, 
+un mapa de directores por nombre y otro por id, un mapa de actores por nombre, y por último, un mapa por nombre de género. 
+¿Qué hacer al procesar cada línea de cada uno de los archivos?
+Se va agregando o actualizando información a los mapas. 
+¿Se debería ordenar la información? Por qué concepto?
+Se podría ordenar bajo la columna "Voto promedio"
+¿Cómo usar la menor cantidad de memoria posible?
+Usando apuntadores a la lista inicial, asimismo, mediante el uso de singlelinked lists. 
+¿Cómo se pueden utilizar las estructuras de datos vistas en clase? ¿Cuáles campos
+son los ideales para definir la llave de un map?
+Los Id, los nombres de las películas, director y actores. 

@@ -49,7 +49,7 @@ def newCatalogMovies():
     """
     Inicializa el catálogo de peliculas. Retorna el catalogo inicializado.
     """
-    catalog = {'moviesList':None, 'directors':None, 'moviesMapTitle': None, 'moviesMapId': None,  "actors": None}
+    catalog = {"genres": None,'moviesList':None, 'directors':None, 'moviesMapTitle': None, 'moviesMapId': None,  "actors": None}
     catalog['moviesList'] = lt.newList("ARRAY_LIST")
     catalog['moviesMapTitle'] = map.newMap (170003, maptype='CHAINING')
     catalog['moviesMapId'] = map.newMap (170003, maptype='CHAINING')#329044 movies
@@ -57,6 +57,7 @@ def newCatalogMovies():
     catalog['directorsId'] = map.newMap (175003, maptype='PROBING') #85929 directors
     #catalog['actorsId']=map.newMap (131011, maptype='CHAINING')#260861 actors 
     catalog['actorsName']=map.newMap (131011, maptype='CHAINING')#260861 actors 
+    catalog["genres"]= map.newMap(43, maptype= "PROBING")#21 genres
 
     return catalog
 
@@ -94,16 +95,25 @@ def newActor (row, name):
     """
     Crea una nueva estructura para modelar un autor y sus libros
     """
-    director = {'name':"", "ActorMovies":None,  "sum_average_rating":0, "movies": None, "directors": None, "dir":""}
-    director ['name'] = name
+    actor = {'name':"", "ActorMovies":None,  "sum_average_rating":0, "movies": None, "directors": None, "dir":""}
+    actor ['name'] = name
     #director['sum_average_rating'] = float(row['vote_average'])
-    director ['ActorMovies'] = lt.newList('ARRAY_LIST')
-    director["movies"]=lt.newList("ARRAY_LIST")
-    lt.addLast(director['ActorMovies'], row['id'])
-    director["directors"]= lt.newList("ARRAY_LIST")
-    lt.addLast(director['directors'], row['director_name'])
+    actor ['ActorMovies'] = lt.newList('ARRAY_LIST')
+    actor["movies"]=lt.newList("ARRAY_LIST")
+    lt.addLast(actor['ActorMovies'], row['id'])
+    actor["directors"]= lt.newList("ARRAY_LIST")
+    lt.addLast(actor['directors'], row['director_name'])
 
-    return director
+    return actor
+
+def newGenre(row, name):
+    genre = {'name':"","sum_average_rating":0, "movies": None}
+    genre ['name'] = name
+    genre['sum_average_rating'] = float(row['vote_average'])
+    genre["movies"]=lt.newList("ARRAY_LIST")
+    lt.addLast(genre['movies'], row['id'])
+
+    return genre
 
 
 def addBookList (catalog, row):
@@ -165,6 +175,21 @@ def addActorName(catalog, row):
             else:
                 director = newActor(row,row[actorname])
                 map.put(directors, director['name'], director, compareByKey)
+
+def addGenre(catalog, rowgenre, row):
+    """
+    Adiciona un autor al map y sus libros
+    """
+    genre = catalog['genres']
+    names= rowgenre.split("|")
+    for genrename in names:
+        Hay=map.get(genre,genrename,compareByKey)
+        if Hay:
+            lt.addLast(Hay['movies'],row['id'])
+            Hay['sum_average_rating'] += float(row['vote_average'])
+        else:
+            director = newGenre(row,genrename)
+            map.put(genre, director['name'], director, compareByKey)
 """
 def addActorId(catalog, row):
     
@@ -196,11 +221,11 @@ def addDirectorId(catalog, row):
     directors = catalog['directorsId']
     director= newDirector(row)
     map.put(directors, row["id"], director, compareByKey )
+
     
 
 
 # Funciones de consulta
-
 
 def getBookInList (catalog, bookTitle):
     """
@@ -301,6 +326,13 @@ def AllmoviesActor(catalog, actname, actor):
                 numdirector = cont
                 actor["dir"] = direc
     return actor 
+
+def getGenre(catalog, name):
+    genre= map.get(catalog["genres"],name ,compareByKey)
+    if genre:
+        return genre
+    else:
+        return None
 
 
 # Funciones de comparacion
