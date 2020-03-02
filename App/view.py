@@ -42,6 +42,7 @@ def printMenu():
     print("2- Buscar películas con votación positiva por director")
     print("3- Buscar información de autor por nombre ...")
     print("4- Requerimiento 3 ...")
+    print("4- Requerimiento 4 ...")
     print("0- Salir")
 
 
